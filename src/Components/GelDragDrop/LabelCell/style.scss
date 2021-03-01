@@ -1,0 +1,13 @@
+.column_mainLabel__labelCell,
+.column_ladderColumn__labelCell {
+    padding: 10px 0px;
+    height: 16px;
+    width: 100%;
+    text-align: center;
+    &_label {
+        margin: 0px;
+        color: white;
+        font-family: "Bio Sans", Arial, sans-serif;
+        font-size: 16px;
+    }
+}
