@@ -14,7 +14,7 @@ export function GelDragDrop(props) {
         <GelTable
           range={GEL_DATA.gelRange}
           table={GEL_DATA.gelTable}
-          update={props.onTableUpdate}
+          onUpdate={props.onGelUpdate}
         />
       </div>
     </GelDragDropContext.Provider>
@@ -23,9 +23,22 @@ export function GelDragDrop(props) {
 
 GelDragDrop.propTypes = {
   /**
+   * The bottom and top limit values of the gel slide
+   */
+  getRange: PropTypes.shape({
+    /**
+     * The lower limit of range
+     */
+    bottom: PropTypes.number,
+    /**
+     * The upper limit of range
+     */
+    top: PropTypes.number,
+  }),
+  /**
    * Function to update gel position in table
    */
-  onTableUpdate: PropTypes.func,
+  onGelUpdate: PropTypes.func,
 };
 
 GelDragDrop.defaultProps = {

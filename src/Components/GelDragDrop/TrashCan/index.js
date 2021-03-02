@@ -11,7 +11,21 @@ export function TrashCan(props) {
   const { height } = React.useContext(GelDragDropContext);
   const style = { height: `${height.trashRow}px` };
 
-  return <div className={props.className} style={style}></div>;
+  const onDragOver = (event) => event.preventDefault();
+
+  const onDrop = (event) => {
+    let data = event.dataTransfer.getData("text");
+    debugger;
+  };
+
+  return (
+    <div
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      className={props.className}
+      style={style}
+    ></div>
+  );
 }
 
 TrashCan.propTypes = {

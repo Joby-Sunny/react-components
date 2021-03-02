@@ -1,10 +1,11 @@
-.gelStrip__itemfixed,
-.gelStrip__itemdraggable,
-.gelStrip__itemlabel {
+.gelPathStrip__itemfixed,
+.gelPathStrip__itemdraggable,
+.gelPathStrip__itemlabel,
+.gelBoxStrip__itemdraggable {
     position: absolute;
 }
 
-.gelStrip__itemlabel {
+.gelPathStrip__itemlabel {
     color: #fff;
     font-size: 16px;
     left: unset !important;
@@ -14,10 +15,17 @@
     align-items: center;
 }
 
-.gelStrip__itemdraggable {
+.gelPathStrip__itemdraggable {
     background-color: rgb(0, 62, 107);
 }
 
-.gelStrip__itemfixed {
+.gelPathStrip__itemfixed {
     background-color: #5b9ab1;
+}
+
+.gelBoxStrip__itemdraggable {
+    top: 0 !important;
+    width: 100% !important;
+    left: 0 !important;
+    background-color: rgb(0, 62, 107);
 }

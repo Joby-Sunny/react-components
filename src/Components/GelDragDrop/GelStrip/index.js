@@ -13,17 +13,40 @@ export function GelStrip(props) {
   const { height } = React.useContext(GelDragDropContext);
   const style = getGelStripStyle(height, props);
 
+  const setInnerText = () => {
+    let text = null;
+    if (props.gelType === GEL_TYPE.LABEL) text = `${props.value} bp`;
+    return text;
+  };
+
+  const setDraggable = () => props.gelType === GEL_TYPE.DRAGGABLE;
+
+  const onDragStart = (event) => {
+    event.dataTransfer.setData("text", `${props.gelId}_123`);
+    event.dataTransfer.setDragImage(
+      event.target,
+      event.target.clientWidth / 2,
+      0
+    );
+  };
+
   return (
     <div
-      className={`gelStrip__item${props.gelType.toLowerCase()}`}
+      draggable={setDraggable()}
+      onDragStart={onDragStart}
+      className={`${props.className}${props.gelType.toLowerCase()}`}
       style={style}
     >
-      {props.gelType === GEL_TYPE.LABEL ? `${props.value} bp` : null}
+      {setInnerText()}
     </div>
   );
 }
 
 GelStrip.propTypes = {
+  /**
+   * Classname to be set on component
+   */
+  className: PropTypes.string,
   /**
    * Unique id for Gel Strip
    */

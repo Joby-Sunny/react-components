@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { GelDragDropContext } from "../GelDragDrop.utils";
+import { GelStrip } from "../GelStrip";
 import "./style.scss";
 
 /**
@@ -11,9 +12,15 @@ export function GelHolder(props) {
   const { height } = React.useContext(GelDragDropContext);
   const style = { height: `${height.gelHolderBox}px` };
 
+  const renderGel = (gel) => (
+    <GelStrip className="gelBoxStrip__item" {...gel} />
+  );
+
   return (
     <div className={props.className}>
-      <div className={`${props.className}_gelBox`} style={style}></div>
+      <div className={`${props.className}_gelBox`} style={style}>
+        {props.gelItems.map(renderGel)}
+      </div>
     </div>
   );
 }

@@ -10,14 +10,34 @@ import "./style.scss";
  *    to correct value.
  */
 export function GelPath(props) {
+  const [value, setValue] = React.useState(0);
   const { height } = React.useContext(GelDragDropContext);
   const style = { height: `${height.gelPath}px` };
 
-  const renderGel = (gel) => <GelStrip {...gel} />;
+  const renderGel = (gel) => (
+    <GelStrip className="gelPathStrip__item" {...gel} />
+  );
 
-  console.log("Gel Items", props);
+  const onDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const onDrop = (event) => {
+    let data = event.dataTransfer.getData("text");
+    let { top, bottom } = event.target.getBoundingClientRect();
+    let actualLength = bottom - top - 5;
+    let actualYValue = event.clientY - top;
+    let computedValue = 1000 - (actualYValue * 1000) / actualLength;
+    console.log("computed value", computedValue);
+  };
+
   return (
-    <div style={style} className={props.className}>
+    <div
+      style={style}
+      className={props.className}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
       {props.gelItems.map(renderGel)}
     </div>
   );
