@@ -1,6 +1,9 @@
 .column_mainLabel__trashLabel {
     margin-top: 10px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     &_label {
         width: 60%;
     }

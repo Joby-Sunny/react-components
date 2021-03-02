@@ -8,11 +8,14 @@ export default {
   parameters: {},
   decorators: [
     (Story) => (
-      <div style={{ margin: "auto auto", width: "320px" }}>
+      <div style={{ margin: "auto auto", width: "640px" }}>
         <Story />
       </div>
     ),
   ],
+  argTypes: {
+    onGelUpdate: { action: "clicked" },
+  },
 };
 
 const Template = (args) => <Component {...args} />;
@@ -45,17 +48,17 @@ GelDragDrop.args = {
             { gelId: 4, gelType: "LABEL", height: 100, opacity: 1, value: 100 },
           ],
         },
-        { celId: 7, cellType: "TRASH_LABEL" },
+        { cellId: 3, cellType: "TRASH_LABEL" },
       ],
     },
     {
       colId: 1,
       colType: "LADDER_COLUMN",
       colItems: [
-        { colId: 0, cellType: "LABEL_CELL", label: "DNA Ladder" },
-        { colId: 1, cellType: "GEL_HOLDER", gelItems: [] },
+        { cellId: 0, cellType: "LABEL_CELL", label: "DNA Ladder" },
+        { cellId: 1, cellType: "GEL_HOLDER", gelItems: [] },
         {
-          colId: 2,
+          cellId: 2,
           cellType: "GEL_PATH",
           gelItems: [
             {
@@ -72,7 +75,7 @@ GelDragDrop.args = {
           ],
         },
         {
-          colId: 3,
+          cellId: 3,
           cellType: "TRASH_CAN",
           trashItems: [],
         },
@@ -82,9 +85,9 @@ GelDragDrop.args = {
       colId: 2,
       colType: "LADDER_COLUMN",
       colItems: [
-        { colId: 0, cellType: "LABEL_CELL", label: "Sample" },
+        { cellId: 0, cellType: "LABEL_CELL", label: "Sample" },
         {
-          colId: 1,
+          cellId: 1,
           cellType: "GEL_HOLDER",
           gelItems: [
             {
@@ -104,17 +107,16 @@ GelDragDrop.args = {
           ],
         },
         {
-          colId: 2,
+          cellId: 2,
           cellType: "GEL_PATH",
           gelItems: [],
         },
         {
-          colId: 3,
+          cellId: 3,
           cellType: "TRASH_CAN",
           trashItems: [],
         },
       ],
     },
   ],
-  onGelUpdate: { action: "clicked" },
 };

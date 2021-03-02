@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { GEL_DATA } from "./GelDragDrop.constants";
 import { GelTable } from "./GelTable";
 import { Title } from "./Title";
 import { GelDragDropContext, useGelDragDrop } from "./GelDragDrop.utils";
@@ -8,14 +7,10 @@ import "./style.scss";
 
 export function GelDragDrop(props) {
   return (
-    <GelDragDropContext.Provider value={useGelDragDrop()}>
+    <GelDragDropContext.Provider value={useGelDragDrop(props.gelRange)}>
       <div className="gelDragDrop">
         <Title />
-        <GelTable
-          range={GEL_DATA.gelRange}
-          table={GEL_DATA.gelTable}
-          onUpdate={props.onGelUpdate}
-        />
+        <GelTable table={props.gelTable} onUpdate={props.onGelUpdate} />
       </div>
     </GelDragDropContext.Provider>
   );
@@ -25,7 +20,7 @@ GelDragDrop.propTypes = {
   /**
    * The bottom and top limit values of the gel slide
    */
-  getRange: PropTypes.shape({
+  gelRange: PropTypes.shape({
     /**
      * The lower limit of range
      */
@@ -36,11 +31,13 @@ GelDragDrop.propTypes = {
     top: PropTypes.number,
   }),
   /**
+   * Data needed to render the GelTable
+   */
+  gelTable: PropTypes.arrayOf(PropTypes.object),
+  /**
    * Function to update gel position in table
    */
   onGelUpdate: PropTypes.func,
 };
 
-GelDragDrop.defaultProps = {
-  onTableUpdate: console.log,
-};
+GelDragDrop.defaultProps = {};

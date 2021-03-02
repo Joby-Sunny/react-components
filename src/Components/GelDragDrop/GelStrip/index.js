@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { GelDragDropContext } from "../GelDragDrop.utils";
 import { getGelStripStyle } from "./GelStrip.utils";
-import { GEL_TYPE } from "../GelDragDrop.constants";
+import { GEL_TYPE, GEL_DRAG_DROP } from "../GelDragDrop.constants";
 import "./style.scss";
 
 /**
@@ -22,7 +22,7 @@ export function GelStrip(props) {
   const setDraggable = () => props.gelType === GEL_TYPE.DRAGGABLE;
 
   const onDragStart = (event) => {
-    event.dataTransfer.setData("text", `${props.gelId}_123`);
+    event.dataTransfer.setData(GEL_DRAG_DROP.GEL_ID, props.gelId);
     event.dataTransfer.setDragImage(
       event.target,
       event.target.clientWidth / 2,
@@ -48,23 +48,23 @@ GelStrip.propTypes = {
    */
   className: PropTypes.string,
   /**
-   * Unique id for Gel Strip
+   * Unique Id for Gel
    */
-  gelId: PropTypes.number,
+  gelId: PropTypes.string,
   /**
-   * Type of Gel Strip
+   * Type of Gel-Strip
    */
-  gelType: PropTypes.string,
+  gelType: PropTypes.oneOf(["LABEL", "DRAGGABLE", "FIXED"]),
   /**
-   * Height of Gel Strip
+   * Height value go Gel
    */
   height: PropTypes.number,
   /**
-   * opacity of Gel Strip
+   * Opacity value of Gel
    */
   opacity: PropTypes.number,
   /**
-   * Position value of Gel Strip
+   * Postion value of Gel
    */
-  value: PropTypes.number,
+  value: PropTypes.number || null,
 };

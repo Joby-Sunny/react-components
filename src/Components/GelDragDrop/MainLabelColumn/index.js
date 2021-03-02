@@ -12,25 +12,49 @@ import { TrashLabel } from "../TrashLabel";
  *  - Render the MainLabel component that render the fixed ladder labels and trash icon
  */
 export function MainLabelColumn(props) {
+  const renderLabelCell = (cell) => (
+    <LabelCell
+      key={cell.cellId}
+      className="column_mainLabel__labelCell"
+      label={cell.label}
+    />
+  );
+
+  const renderGelHolder = (cell) => (
+    <EmptyGelHolder
+      key={cell.cellId}
+      className="column_mainLabel__emptyGelHolder"
+    />
+  );
+
+  const renderGelPath = (cell) => (
+    <GelPath
+      key={cell.cellId}
+      className="column_mainLabel__gelPath"
+      cellId={`${props.colId}_${cell.cellId}`}
+      gelItems={cell.gelItems}
+    />
+  );
+
+  const renderTrashLabel = (cell) => (
+    <TrashLabel key={cell.cellId} className="column_mainLabel__trashLabel" />
+  );
+
   const renderCell = (cell) => {
     switch (cell.cellType) {
       case CELL_TYPE.LABEL_CELL:
-        return (
-          <LabelCell
-            className="column_mainLabel__labelCell"
-            label={cell.label}
-          />
-        );
+        return renderLabelCell(cell);
       case CELL_TYPE.EMPTY_GEL_HOLDER:
-        return <EmptyGelHolder className="column_mainLabel__emptyGelHolder" />;
+        return renderGelHolder(cell);
       case CELL_TYPE.GEL_PATH:
-        return <GelPath className="column_mainLabel__gelPath" {...cell} />;
+        return renderGelPath(cell);
       case CELL_TYPE.TRASH_LABEL:
-        return <TrashLabel className="column_mainLabel__trashLabel" />;
+        return renderTrashLabel(cell);
       default:
         return null;
     }
   };
+
   return (
     <div className="gelDragDrop_table_column column_mainLabel">
       {props.colItems.map(renderCell)}
@@ -56,6 +80,33 @@ MainLabelColumn.propTypes = {
        * Type of Cell
        */
       cellType: PropTypes.string,
+      /**
+       * List of gel Items to be displayed in column
+       */
+      gelItems: PropTypes.arrayOf(
+        PropTypes.shape({
+          /**
+           * Unique id for the gel
+           */
+          gelId: PropTypes.number,
+          /**
+           * Type of Gel
+           */
+          gelType: PropTypes.oneOf(["LABEL"]),
+          /**
+           * Height value of Gel Strip
+           */
+          height: PropTypes.number,
+          /**
+           * Opacity value for Gel Strip
+           */
+          opacity: PropTypes.number,
+          /**
+           * Position Value for Gel
+           */
+          value: PropTypes.number,
+        })
+      ),
     })
   ),
 };

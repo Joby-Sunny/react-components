@@ -13,7 +13,15 @@ export function GelHolder(props) {
   const style = { height: `${height.gelHolderBox}px` };
 
   const renderGel = (gel) => (
-    <GelStrip className="gelBoxStrip__item" {...gel} />
+    <GelStrip
+      key={gel.gelId}
+      gelId={`${props.cellId}_${gel.gelId}`}
+      gelType={gel.gelType}
+      height={gel.height}
+      opacity={gel.opacity}
+      value={gel.value}
+      className="gelBoxStrip__item"
+    />
   );
 
   return (
@@ -30,6 +38,41 @@ GelHolder.propTypes = {
    * ClassName to be set for the cell;
    */
   className: PropTypes.string,
+  /**
+   * Unique Id for the cell
+   */
+  cellId: PropTypes.string,
+  /**
+   * List of GelItems to be renderd heree
+   */
+  gelItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      /**
+       * Unique Id for Gel
+       */
+      gelId: PropTypes.number,
+      /**
+       * Type of Gel-Strip
+       */
+      gelType: PropTypes.oneOf(["LABEL", "DRAGGABLE", "FIXED"]),
+      /**
+       * Height value go Gel
+       */
+      height: PropTypes.number,
+      /**
+       * Opacity value of Gel
+       */
+      opacity: PropTypes.number,
+      /**
+       * Postion value of Gel
+       */
+      value: PropTypes.number || null,
+    })
+  ),
+  /**
+   * Function to call when an item is dropped here.
+   */
+  onUpdate: PropTypes.func,
 };
 
 GelHolder.defaultProps = {};

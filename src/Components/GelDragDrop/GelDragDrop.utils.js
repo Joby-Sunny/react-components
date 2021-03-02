@@ -1,4 +1,5 @@
 import React from "react";
+import { MAX_GEL_ITEMS_PER_HOLDER } from "./GelDragDrop.constants";
 
 export const GelDragDropContext = React.createContext(null);
 
@@ -10,19 +11,23 @@ const INITIAL_HEIGHT = {
   trashRow: 1,
 };
 
-export function useGelDragDrop() {
+export function useGelDragDrop(range) {
   const [height, setHeight] = React.useState(INITIAL_HEIGHT);
+  const [limit] = React.useState({
+    ...range,
+    difference: range.top - range.bottom,
+  });
 
   function calculateHeight(tableRef) {
     const { offsetWidth } = tableRef;
     let height = { ...INITIAL_HEIGHT };
     height.gelPath = getGelPathHeight(offsetWidth);
     height.gelHolderBox = getGelBoxHeight(height.gelPath);
-    height.trashRow = getTrashRowHeight(offsetWidth);
+    height.trashRow = getTrashRowHeight(height.gelHolderBox);
     setHeight(height);
   }
 
-  return { height, calculateHeight };
+  return { height, calculateHeight, limit };
 }
 
 function getGelPathHeight(offsetWidth) {
@@ -33,6 +38,6 @@ function getGelBoxHeight(gelPathHeight) {
   return gelPathHeight / 10;
 }
 
-function getTrashRowHeight(offsetWidth) {
-  return (offsetWidth * 10) / 100;
+function getTrashRowHeight(holderBoxHeight) {
+  return holderBoxHeight * (MAX_GEL_ITEMS_PER_HOLDER + 1);
 }

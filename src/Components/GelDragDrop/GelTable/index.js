@@ -8,12 +8,30 @@ import "./style.scss";
 
 export function GelTable(props) {
   const { calculateHeight } = React.useContext(GelDragDropContext);
+
+  const renderMainLabelColumn = (column) => (
+    <MainLabelColumn
+      key={column.colId}
+      colId={column.colId}
+      colItems={column.colItems}
+    />
+  );
+
+  const renderLadderColumn = (column) => (
+    <LadderColumn
+      key={column.colId}
+      colId={column.colId}
+      colItems={column.colItems}
+      onUpdate={props.onUpdate}
+    />
+  );
+
   const renderColumn = (column) => {
     switch (column.colType) {
       case COL_TYPE.MAIN_LABEL:
-        return <MainLabelColumn {...column} />;
+        return renderMainLabelColumn(column);
       case COL_TYPE.LADDER_COLUMN:
-        return <LadderColumn {...column} />;
+        return renderLadderColumn(column);
       default:
         return null;
     }
@@ -32,19 +50,13 @@ export function GelTable(props) {
 
 GelTable.propTypes = {
   /**
-   * The range for the GEL_PATH, lowest and highest values
+   * Data needed to render gel Table
    */
-  range: PropTypes.shape({
-    /**
-     * The starting value for GEL_PATH
-     */
-    low: PropTypes.number,
-    /**
-     * The ending value for GEL_PATH
-     */
-    high: PropTypes.number,
-  }),
-  gelTable: PropTypes.array,
+  table: PropTypes.arrayOf(PropTypes.object),
+  /**
+   * Function to call to up update Gel Table
+   */
+  onUpdate: PropTypes.func,
 };
 
 GelTable.defaultProps = {};

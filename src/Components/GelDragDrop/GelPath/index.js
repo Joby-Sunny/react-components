@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { GelDragDropContext } from "../GelDragDrop.utils";
 import { GelStrip } from "../GelStrip";
+import { GEL_DRAG_DROP } from "../GelDragDrop.constants";
 import "./style.scss";
 
 /**
@@ -10,25 +11,38 @@ import "./style.scss";
  *    to correct value.
  */
 export function GelPath(props) {
-  const [value, setValue] = React.useState(0);
-  const { height } = React.useContext(GelDragDropContext);
+  const { height, limit } = React.useContext(GelDragDropContext);
   const style = { height: `${height.gelPath}px` };
 
   const renderGel = (gel) => (
-    <GelStrip className="gelPathStrip__item" {...gel} />
+    <GelStrip
+      key={gel.gelId}
+      gelId={`${props.cellId}_${gel.gelId}`}
+      gelType={gel.gelType}
+      height={gel.height}
+      opacity={gel.opacity}
+      value={gel.value}
+      className="gelPathStrip__item"
+    />
   );
 
   const onDragOver = (event) => {
     event.preventDefault();
   };
 
+  const getGelValue = ({ target, clientY }) => {
+    const { top, bottom } = target.getBoundingClientRect();
+    const gelPathLength = bottom - top - 5;
+    const deltaYValue = clientY - top;
+    return limit.top - (deltaYValue * limit.difference) / gelPathLength;
+  };
+
   const onDrop = (event) => {
-    let data = event.dataTransfer.getData("text");
-    let { top, bottom } = event.target.getBoundingClientRect();
-    let actualLength = bottom - top - 5;
-    let actualYValue = event.clientY - top;
-    let computedValue = 1000 - (actualYValue * 1000) / actualLength;
-    console.log("computed value", computedValue);
+    let [colId, cellId, gelId] = event.dataTransfer
+      .getData(GEL_DRAG_DROP.GEL_ID)
+      .split("_");
+    let computedValue = parseInt(getGelValue(event));
+    props.onUpdate({ colId, cellId, gelId, value: computedValue });
   };
 
   return (
@@ -49,32 +63,40 @@ GelPath.propTypes = {
    */
   className: PropTypes.string,
   /**
-   * List of Gel Items to display on the Gel Path.
+   * Unique Id for the cell
+   */
+  cellId: PropTypes.string,
+  /**
+   * List of GelItems to be renderd heree
    */
   gelItems: PropTypes.arrayOf(
     PropTypes.shape({
       /**
-       * Unique Id for the Gel
+       * Unique Id for Gel
        */
-      id: PropTypes.number,
+      gelId: PropTypes.number,
       /**
-       * Type of Gel
+       * Type of Gel-Strip
        */
-      gelType: PropTypes.string,
+      gelType: PropTypes.oneOf(["LABEL", "DRAGGABLE", "FIXED"]),
       /**
-       * Height value for the gel
+       * Height value go Gel
        */
       height: PropTypes.number,
       /**
-       * Opacity value for the gel
+       * Opacity value of Gel
        */
       opacity: PropTypes.number,
       /**
-       * Slide value of gel
+       * Postion value of Gel
        */
-      value: PropTypes.number,
+      value: PropTypes.number || null,
     })
   ),
+  /**
+   * Function to call when an item is dropped here.
+   */
+  onUpdate: PropTypes.func,
 };
 
 GelPath.defaultProps = {};

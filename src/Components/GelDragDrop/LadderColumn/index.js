@@ -12,27 +12,59 @@ import "./style.scss";
  *  - Render the MainLabel component that render the fixed ladder labels and trash icon
  */
 export function LadderColumn(props) {
+  const renderLabelCell = (cell) => (
+    <LabelCell
+      key={cell.cellId}
+      className="column_ladderColumn__labelCell"
+      label={cell.label}
+    />
+  );
+
+  const renderGelHolder = (cell) => (
+    <GelHolder
+      key={cell.cellId}
+      cellId={`${props.colId}_${cell.cellId}`}
+      className="column_ladderColumn__gelHolder"
+      gelItems={cell.gelItems}
+      onUpdate={props.onUpdate}
+    />
+  );
+
+  const renderGelPath = (cell) => (
+    <GelPath
+      key={cell.cellId}
+      cellId={`${props.colId}_${cell.cellId}`}
+      className="column_ladderColumn__gelPath"
+      gelItems={cell.gelItems}
+      onUpdate={props.onUpdate}
+    />
+  );
+
+  const renderTrashCan = (cell) => (
+    <TrashCan
+      key={cell.cellId}
+      cellId={`${props.colId}_${cell.cellId}`}
+      className="column_ladderColumn__trashCan"
+      gelItems={cell.gelItems}
+      onUpdate={props.onUpdate}
+    />
+  );
+
   const renderCell = (cell) => {
     switch (cell.cellType) {
       case CELL_TYPE.LABEL_CELL:
-        return (
-          <LabelCell
-            className="column_ladderColumn__labelCell"
-            label={cell.label}
-          />
-        );
+        return renderLabelCell(cell);
       case CELL_TYPE.GEL_HOLDER:
-        return (
-          <GelHolder className="column_ladderColumn__gelHolder" {...cell} />
-        );
+        return renderGelHolder(cell);
       case CELL_TYPE.GEL_PATH:
-        return <GelPath className="column_ladderColumn__gelPath" {...cell} />;
+        return renderGelPath(cell);
       case CELL_TYPE.TRASH_CAN:
-        return <TrashCan className="column_ladderColumn__trashCan" />;
+        return renderTrashCan(cell);
       default:
         return null;
     }
   };
+
   return (
     <div className="gelDragDrop_table_column column_ladderColumn">
       {props.colItems.map(renderCell)}
@@ -58,8 +90,20 @@ LadderColumn.propTypes = {
        * Type of Cell
        */
       cellType: PropTypes.string,
+      /**
+       * Label to display in LabelCell [LabelCell]
+       */
+      label: PropTypes.string,
+      /**
+       * List of gel Items in cell [GelPath, GelHolder]
+       */
+      gelItems: PropTypes.arrayOf(PropTypes.object),
     })
   ),
+  /**
+   * Function to invoke when Gel Position updated
+   */
+  onUpdate: PropTypes.func,
 };
 
 LadderColumn.defaultProps = {};

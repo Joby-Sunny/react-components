@@ -13,7 +13,11 @@ export function GelDragDropQuestion(props) {
     <div className="geldragdropquestion">
       <MainHeader heading={props.heading} text={props.text} />
       <Content>
-        <GelDragDrop />
+        <GelDragDrop
+          gelRange={props.gelRange}
+          gelTable={props.gelTable}
+          onGelUpdate={props.onGelUpdate}
+        />
       </Content>
       <SubmitBlock disabled={isSubmitDisabled()} onSubmit={props.onSubmit} />
     </div>
@@ -37,4 +41,25 @@ GelDragDropQuestion.propTypes = {
    * Function to invoke when submit button is clicked
    */
   onSubmit: PropTypes.func,
+  /**
+   * The bottom and top limit values of the gel slide
+   */
+  gelRange: PropTypes.shape({
+    /**
+     * The lower limit of range
+     */
+    bottom: PropTypes.number,
+    /**
+     * The upper limit of range
+     */
+    top: PropTypes.number,
+  }),
+  /**
+   * Data needed to render the GelTable
+   */
+  gelTable: PropTypes.arrayOf(PropTypes.object),
+  /**
+   * Function to update gel position in table
+   */
+  onGelUpdate: PropTypes.func,
 };
