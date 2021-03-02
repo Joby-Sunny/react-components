@@ -24,7 +24,7 @@ export function MainLabelColumn(props) {
       case CELL_TYPE.EMPTY_GEL_HOLDER:
         return <EmptyGelHolder className="column_mainLabel__emptyGelHolder" />;
       case CELL_TYPE.GEL_PATH:
-        return <GelPath className="column_mainLabel__gelPath" />;
+        return <GelPath className="column_mainLabel__gelPath" {...cell} />;
       case CELL_TYPE.TRASH_LABEL:
         return <TrashLabel className="column_mainLabel__trashLabel" />;
       default:

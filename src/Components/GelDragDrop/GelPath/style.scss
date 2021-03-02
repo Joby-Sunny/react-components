@@ -1,3 +1,9 @@
 .column_ladderColumn__gelPath {
     background-color: rgb(153, 223, 249);
 }
+
+.column_mainLabel__gelPath,
+.column_ladderColumn__gelPath {
+    position: relative;
+    padding-bottom: 5px;
+}

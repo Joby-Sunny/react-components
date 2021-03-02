@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { COL_TYPE } from "../GelDragDrop.constants";
 import { MainLabelColumn } from "../MainLabelColumn";
-import "./style.scss";
 import { LadderColumn } from "../LadderColumn";
+import { TableRef, GelDragDropContext } from "../GelDragDrop.utils";
+import "./style.scss";
 
 export function GelTable(props) {
+  const { calculateHeight } = React.useContext(GelDragDropContext);
   const renderColumn = (column) => {
     switch (column.colType) {
       case COL_TYPE.MAIN_LABEL:
@@ -17,8 +19,14 @@ export function GelTable(props) {
     }
   };
 
+  React.useEffect(() => {
+    calculateHeight(TableRef.current);
+  }, []);
+
   return (
-    <div className="gelDragDrop_table">{props.table.map(renderColumn)}</div>
+    <div className="gelDragDrop_table" ref={TableRef}>
+      {props.table.map(renderColumn)}
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { GelDragDropContext } from "../GelDragDrop.utils";
 import "./style.scss";
 
 /**
@@ -7,14 +8,8 @@ import "./style.scss";
  *  - Cell that renders the top Label
  */
 export function TrashCan(props) {
-  const [style, setStyle] = React.useState({});
-
-  React.useEffect(() => {
-    const { offsetWidth } = document.querySelector(".gelDragDrop");
-    const trashRowHeight = (offsetWidth * 10) / 100;
-    let height = `${trashRowHeight}px`;
-    setStyle({ height });
-  }, []);
+  const { height } = React.useContext(GelDragDropContext);
+  const style = { height: `${height.trashRow}px` };
 
   return <div className={props.className} style={style}></div>;
 }

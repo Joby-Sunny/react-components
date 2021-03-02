@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { GelDragDropContext } from "../GelDragDrop.utils";
 import "./style.scss";
 
 /**
@@ -7,15 +8,8 @@ import "./style.scss";
  *  - Cell the render the GelHolder where a gel items are initally stored.
  */
 export function GelHolder(props) {
-  const [style, setStyle] = React.useState({});
-
-  React.useEffect(() => {
-    const { offsetWidth } = document.querySelector(".gelDragDrop");
-    const gelPathHeight = (offsetWidth * 50) / 100;
-    const gelBoxHeight = gelPathHeight / 10;
-    let height = `${gelBoxHeight}px`;
-    setStyle({ height });
-  }, []);
+  const { height } = React.useContext(GelDragDropContext);
+  const style = { height: `${height.gelHolderBox}px` };
 
   return (
     <div className={props.className}>

@@ -24,7 +24,7 @@ export function LadderColumn(props) {
       case CELL_TYPE.GEL_HOLDER:
         return <GelHolder className="column_ladderColumn__gelHolder" />;
       case CELL_TYPE.GEL_PATH:
-        return <GelPath className="column_ladderColumn__gelPath" />;
+        return <GelPath className="column_ladderColumn__gelPath" {...cell} />;
       case CELL_TYPE.TRASH_CAN:
         return <TrashCan className="column_ladderColumn__trashCan" />;
       default:

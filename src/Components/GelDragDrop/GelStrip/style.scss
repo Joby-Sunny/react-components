@@ -1,0 +1,23 @@
+.gelStrip__itemfixed,
+.gelStrip__itemdraggable,
+.gelStrip__itemlabel {
+    position: absolute;
+}
+
+.gelStrip__itemlabel {
+    color: #fff;
+    font-size: 16px;
+    left: unset !important;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gelStrip__itemdraggable {
+    background-color: rgb(0, 62, 107);
+}
+
+.gelStrip__itemfixed {
+    background-color: #5b9ab1;
+}
