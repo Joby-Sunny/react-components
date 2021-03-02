@@ -1,5 +1,6 @@
 import React from "react";
 import { GelDragDrop as Component } from "./index";
+import { Template } from "./GelDragDrop.story.utils";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -17,8 +18,6 @@ export default {
     onGelUpdate: { action: "clicked" },
   },
 };
-
-const Template = (args) => <Component {...args} />;
 
 export const GelDragDrop = Template.bind({});
 

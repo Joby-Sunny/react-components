@@ -38,11 +38,20 @@ export function GelPath(props) {
   };
 
   const onDrop = (event) => {
-    let [colId, cellId, gelId] = event.dataTransfer
+    let [colId, prevCellId, gelId] = event.dataTransfer
       .getData(GEL_DRAG_DROP.GEL_ID)
       .split("_");
     let computedValue = parseInt(getGelValue(event));
-    props.onUpdate({ colId, cellId, gelId, value: computedValue });
+    let [currentColId, currentCellId] = props.cellId.split("_");
+    if (colId === currentColId) {
+      props.onUpdate({
+        colId,
+        prevCellId,
+        currentCellId,
+        gelId,
+        value: computedValue,
+      });
+    }
   };
 
   return (
