@@ -22,7 +22,6 @@ export function GelTable(props) {
       key={column.colId}
       colId={column.colId}
       colItems={column.colItems}
-      onUpdate={props.onUpdate}
     />
   );
 
@@ -53,10 +52,6 @@ GelTable.propTypes = {
    * Data needed to render gel Table
    */
   table: PropTypes.arrayOf(PropTypes.object),
-  /**
-   * Function to call to up update Gel Table
-   */
-  onUpdate: PropTypes.func,
 };
 
 GelTable.defaultProps = {};

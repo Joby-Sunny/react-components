@@ -76,7 +76,7 @@ GelDragDrop.args = {
         {
           cellId: 3,
           cellType: "TRASH_CAN",
-          trashItems: [],
+          gelItems: [],
         },
       ],
     },
@@ -113,7 +113,7 @@ GelDragDrop.args = {
         {
           cellId: 3,
           cellType: "TRASH_CAN",
-          trashItems: [],
+          gelItems: [],
         },
       ],
     },

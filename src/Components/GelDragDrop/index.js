@@ -7,10 +7,10 @@ import "./style.scss";
 
 export function GelDragDrop(props) {
   return (
-    <GelDragDropContext.Provider value={useGelDragDrop(props.gelRange)}>
+    <GelDragDropContext.Provider value={useGelDragDrop(props.gelRange,props.onGelUpdate)}>
       <div className="gelDragDrop">
         <Title />
-        <GelTable table={props.gelTable} onUpdate={props.onGelUpdate} />
+        <GelTable table={props.gelTable}/>
       </div>
     </GelDragDropContext.Provider>
   );

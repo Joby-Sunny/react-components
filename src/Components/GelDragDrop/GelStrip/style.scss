@@ -15,8 +15,9 @@
     align-items: center;
 }
 
-.gelPathStrip__itemdraggable {
-    background-color: rgb(0, 62, 107);
+.gelPathStrip__itemdraggable,
+.gelTrashStrip__itemdraggable {
+    background-color: rgb(0, 99, 195);
 }
 
 .gelPathStrip__itemfixed {
@@ -27,5 +28,12 @@
     top: 0 !important;
     width: 100% !important;
     left: 0 !important;
-    background-color: rgb(0, 62, 107);
+    background-color: rgb(0, 99, 195);
+}
+
+.gelTrashStrip__itemdraggable {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

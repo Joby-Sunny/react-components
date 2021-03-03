@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { GelDragDropContext } from "../GelDragDrop.utils";
+import { GEL_TYPE } from "../GelDragDrop.constants";
 import { GelStrip } from "../GelStrip";
 import "./style.scss";
 
@@ -9,8 +10,16 @@ import "./style.scss";
  *  - Cell the render the GelHolder where a gel items are initally stored.
  */
 export function GelHolder(props) {
-  const { height } = React.useContext(GelDragDropContext);
+  const { height, onDragOver, onStripDrop } = React.useContext(
+    GelDragDropContext
+  );
   const style = { height: `${height.gelHolderBox}px` };
+
+  const setInnerText = (gel) => {
+    let text = null;
+    if (gel.gelType === GEL_TYPE.LABEL) text = `${gel.value} bp`;
+    return text;
+  };
 
   const renderGel = (gel) => (
     <GelStrip
@@ -21,11 +30,18 @@ export function GelHolder(props) {
       opacity={gel.opacity}
       value={gel.value}
       className="gelBoxStrip__item"
-    />
+    >
+      {setInnerText(gel)}
+    </GelStrip>
   );
 
+  const onDrop = (event) => {
+    const value = 0;
+    onStripDrop({ event, cellId: props.cellId, value });
+  };
+
   return (
-    <div className={props.className}>
+    <div className={props.className} onDragOver={onDragOver} onDrop={onDrop}>
       <div className={`${props.className}_gelBox`} style={style}>
         {props.gelItems.map(renderGel)}
       </div>
@@ -69,10 +85,6 @@ GelHolder.propTypes = {
       value: PropTypes.number || null,
     })
   ),
-  /**
-   * Function to call when an item is dropped here.
-   */
-  onUpdate: PropTypes.func,
 };
 
 GelHolder.defaultProps = {};

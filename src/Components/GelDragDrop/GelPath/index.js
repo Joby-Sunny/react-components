@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { GelDragDropContext } from "../GelDragDrop.utils";
+import { GEL_TYPE } from "../GelDragDrop.constants";
 import { GelStrip } from "../GelStrip";
-import { GEL_DRAG_DROP } from "../GelDragDrop.constants";
 import "./style.scss";
 
 /**
@@ -11,8 +11,21 @@ import "./style.scss";
  *    to correct value.
  */
 export function GelPath(props) {
-  const { height, limit } = React.useContext(GelDragDropContext);
-  const style = { height: `${height.gelPath}px` };
+  const {
+    height,
+    limit,
+    onDragOver,
+    getGelValue,
+    onStripDrop,
+  } = React.useContext(GelDragDropContext);
+
+  const style = {
+    height: `${height.gelPath}px`,
+    paddingBottom: `${height.gelPathPaddingBottom}px`,
+  };
+
+  const setInnerText = (gel) =>
+    gel.gelType === GEL_TYPE.LABEL ? `${gel.value} bp` : null;
 
   const renderGel = (gel) => (
     <GelStrip
@@ -23,35 +36,15 @@ export function GelPath(props) {
       opacity={gel.opacity}
       value={gel.value}
       className="gelPathStrip__item"
-    />
+    >
+      {setInnerText(gel)}
+    </GelStrip>
   );
 
-  const onDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const getGelValue = ({ target, clientY }) => {
-    const { top, bottom } = target.getBoundingClientRect();
-    const gelPathLength = bottom - top - 5;
-    const deltaYValue = clientY - top;
-    return limit.top - (deltaYValue * limit.difference) / gelPathLength;
-  };
-
   const onDrop = (event) => {
-    let [colId, prevCellId, gelId] = event.dataTransfer
-      .getData(GEL_DRAG_DROP.GEL_ID)
-      .split("_");
-    let computedValue = parseInt(getGelValue(event));
-    let [currentColId, currentCellId] = props.cellId.split("_");
-    if (colId === currentColId) {
-      props.onUpdate({
-        colId,
-        prevCellId,
-        currentCellId,
-        gelId,
-        value: computedValue,
-      });
-    }
+    let value = parseInt(getGelValue(event));
+    value = value >= limit.bottom ? value : limit.bottom;
+    onStripDrop({ event, cellId: props.cellId, value });
   };
 
   return (
@@ -102,10 +95,6 @@ GelPath.propTypes = {
       value: PropTypes.number || null,
     })
   ),
-  /**
-   * Function to call when an item is dropped here.
-   */
-  onUpdate: PropTypes.func,
 };
 
 GelPath.defaultProps = {};

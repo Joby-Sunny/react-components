@@ -10,14 +10,8 @@ import "./style.scss";
  *  - The strip of gel that is dragged/dropped ovel GelPath
  */
 export function GelStrip(props) {
-  const { height } = React.useContext(GelDragDropContext);
-  const style = getGelStripStyle(height, props);
-
-  const setInnerText = () => {
-    let text = null;
-    if (props.gelType === GEL_TYPE.LABEL) text = `${props.value} bp`;
-    return text;
-  };
+  const { height, limit } = React.useContext(GelDragDropContext);
+  const style = getGelStripStyle({ height, props, limit });
 
   const setDraggable = () => props.gelType === GEL_TYPE.DRAGGABLE;
 
@@ -37,12 +31,16 @@ export function GelStrip(props) {
       className={`${props.className}${props.gelType.toLowerCase()}`}
       style={style}
     >
-      {setInnerText()}
+      {props.children}
     </div>
   );
 }
 
 GelStrip.propTypes = {
+  /**
+   * Text to render inside GelStrip
+   */
+  children: PropTypes.string || null,
   /**
    * Classname to be set on component
    */

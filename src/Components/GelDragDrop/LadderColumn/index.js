@@ -26,7 +26,6 @@ export function LadderColumn(props) {
       cellId={`${props.colId}_${cell.cellId}`}
       className="column_ladderColumn__gelHolder"
       gelItems={cell.gelItems}
-      onUpdate={props.onUpdate}
     />
   );
 
@@ -36,7 +35,6 @@ export function LadderColumn(props) {
       cellId={`${props.colId}_${cell.cellId}`}
       className="column_ladderColumn__gelPath"
       gelItems={cell.gelItems}
-      onUpdate={props.onUpdate}
     />
   );
 
@@ -46,7 +44,6 @@ export function LadderColumn(props) {
       cellId={`${props.colId}_${cell.cellId}`}
       className="column_ladderColumn__trashCan"
       gelItems={cell.gelItems}
-      onUpdate={props.onUpdate}
     />
   );
 
@@ -100,10 +97,6 @@ LadderColumn.propTypes = {
       gelItems: PropTypes.arrayOf(PropTypes.object),
     })
   ),
-  /**
-   * Function to invoke when Gel Position updated
-   */
-  onUpdate: PropTypes.func,
 };
 
 LadderColumn.defaultProps = {};
